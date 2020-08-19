@@ -1,0 +1,702 @@
+<html ng-app="CarouselSlideApp" class="ng-scope">
+   <head>
+      <style type="text/css">.uib-tab > div{position:relative;display:block;padding:10px 15px;outline:0;color:#337ab7;}.uib-tab > div:focus,.uib-tab > div:hover{background-color:#eee;color:#23527c;}.uib-tab.disabled > div{color:#777;}.uib-tab.disabled > div:focus,.uib-tab.disabled > div:hover{color:#777;cursor:not-allowed;background-color:transparent;}.nav-tabs > .uib-tab > div{margin-right:2px;line-height:1.42857143;border:1px solid transparent;border-radius:4px 4px 0 0;}.nav-tabs > .uib-tab > div:hover{border-color:#eee #eee #ddd;}.nav-tabs > .uib-tab.active > div,.nav-tabs > .uib-tab.active > div:focus,.nav-tabs > .uib-tab.active > div:hover{color:#555;cursor:default;background-color:#fff;border-color:#ddd #ddd transparent #ddd;}.nav-pills > .uib-tab > div{border-radius:4px;}.nav-pills > .uib-tab.active > div,.nav-pills > .uib-tab.active > div:focus,.nav-pills > .uib-tab.active > div:hover{color:#fff;background-color:#337ab7;}</style>
+      <style type="text/css">.ng-animate.item:not(.left):not(.right){-webkit-transition:0s ease-in-out left;transition:0s ease-in-out left}</style>
+      <style type="text/css">@charset "UTF-8";[ng\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>
+      <title>TodayTix CMS</title>
+      <link rel="shortcut icon" href="/assets/favicon_no_x-d463a25ea94f79a562d074173bfdd7e5.png" type="image/x-icon">
+      <link rel="apple-touch-icon" href="/assets/apple-touch-icon_no_x-12f9d88a7cebb900ca2fd2d4cdd10f99.png">
+      <link rel="apple-touch-icon" sizes="114x114" href="/assets/apple-touch-icon-retina_no_x-0737c9d0c1f287d0f75d41107bcf8e82.png">
+      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+      <script async="" src="//www.google-analytics.com/analytics.js"></script><script> var rootPath = ''; // This is gross and icky and I don't want to talk about it. // @see https://stackoverflow.com/a/43590722 window.CLOSURE_NO_DEPS = true; </script> 
+      <link rel="stylesheet" href="/assets/application-b78ac5ecb7f37bf48773ee18747001bd.css">
+      <link rel="stylesheet" href="/assets/qa-style-02b504727c2600abb41741dc35fc7f20.css">
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.5.4/react.min.js"></script> <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.5.4/react-dom.min.js"></script> <script type="text/javascript" src="/assets/angular_application-a23f4267d9286eeeae2e7a151ca53134.js"></script> <script type="text/javascript" src="/assets/legacy-b68b4ac84a25130f46d604c5cfb6d23a.js"></script> 
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+      <meta name="layout" content="bootstrap_angular">
+      <script> (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){ (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o), m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m) })(window,document,'script','//www.google-analytics.com/analytics.js','ga'); ga('create', 'UA-44324600-4', 'auto'); ga('send', 'pageview'); ga('set', 'userId', 2277); // Set the user ID using signed-in user_id. </script> 
+   </head>
+   <body>
+      <!-- Header --> 
+      <div id="header" class="main-header hidden-xs">
+         <div class="container padding0">
+            <div class="row clearfix">
+               <div class="logo"><a href="/">Today Tix</a></div>
+               <!-- Main-Navigation --> 
+               <div class="right-pull header-navigation">
+                  <div class="action">
+                     <ul>
+                        <li class="search-list"><a href="javascript:void(0)" class="search sprite">&nbsp;</a></li>
+                        <li><a href="https://qa.todaytix.com/user/profile" class="setting sprite"></a></li>
+                        <li><a href="https://qa.todaytix.com/auth/signOut" class="logout sprite"></a></li>
+                     </ul>
+                  </div>
+                  <div id="main-navigation" class="main-navigation">
+                     <ul>
+                        <li> <a href="/allocation/index">Allocation</a> </li>
+                        <li> <a href="https://qa.todaytix.com/purchases/index">Sales</a> </li>
+                        <li> <a href="https://qa.todaytix.com/show/index">Show</a> </li>
+                        <li> <a href="https://qa.todaytix.com/report/index">Reports</a></li>
+                        <li> <a href="https://qa.todaytix.com/customerService/index">Concierge</a> </li>
+                        <li> <a href="https://qa.todaytix.com/admin/index">Admin</a> </li>
+                     </ul>
+                  </div>
+                  <div id="main-search" class="main-navigation" style="display:none;">
+                     <div class="form editing">
+                        <form action="/search/globalSearch" method="get" name="aForm" id="aForm" class="ng-pristine ng-valid">
+                           <ul>
+                              <li> <input type="text" id="desktop-search-input" style="width: 200px" placeholder="Search entire CMS ..." name="query" value=""> </li>
+                           </ul>
+                        </form>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <!-- /Header --> 
+      <div id="header" class="width320x480 visible-xs">
+         <div class="container padding0">
+            <div class="row clearfix margin0">
+               <div class="col-xs-6 col-md-3 col-lg-3">
+                  <div class="logo small-logo"><a href="/">Today Tix</a></div>
+               </div>
+               <!-- Main-Navigation --> 
+               <div class="col-xs-6 col-md-9 col-lg-9">
+                  <div class="action">
+                     <ul>
+                        <li class="search-list"><a href="javascript:void(0)" class="search sprite">&nbsp;</a></li>
+                        <li class="nav"><a href="#" class="more sprite">&nbsp;</a></li>
+                     </ul>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="width320x480 visible-xs">
+         <div class="menu menu-navigation">
+            <div id="main-navigation" class="clearfix">
+               <form action="/search/globalSearch" method="get" name="aForm" id="aForm" class="ng-pristine ng-valid">
+                  <ul class="main-navigation">
+                     <li> <a href="/allocation/index">Allocation</a> </li>
+                     <li> <a href="https://qa.todaytix.com/show/index">Show</a> </li>
+                     <li> <a href="https://qa.todaytix.com/purchases/index">Sales</a> </li>
+                     <li> <a href="https://qa.todaytix.com/report/index">Reports</a></li>
+                     <li> <a href="https://qa.todaytix.com/customerService/index">Concierge</a> </li>
+                     <li> <a href="https://qa.todaytix.com/admin/index">Admin</a> </li>
+                     <li><a href="/user/profile">My Account</a></li>
+                     <li><a href="/auth/signOut">Logout</a></li>
+                  </ul>
+               </form>
+               <form action="/search/globalSearch" method="get" name="aForm" id="aForm" class="ng-pristine ng-valid">
+                  <ul class="form editing main-search" style="text-align: center"> <input type="text" id="mobile-search-input" style="width: 90%; margin: 20px 0;" placeholder="Search entire CMS ..." name="query" value=""> </ul>
+                  <input type="submit" style="display:none"> 
+               </form>
+            </div>
+         </div>
+      </div>
+      <guidance-component>
+         <div class="status-overlay animate-slide status-{} ng-hide" ng-show="guidanceController.guidance.display"> <img src="/assets/status-error.png" data-no-retina="" class="status-indicator hidden-xs ng-hide" ng-show="guidanceController.guidance.status == 'error'"> <img src="/assets/status-success.png" data-no-retina="" class="status-indicator hidden-xs ng-hide" ng-show="guidanceController.guidance.status == 'success'"> <span class="status-message ng-binding" ng-bind="guidanceController.guidance.message"></span> </div>
+      </guidance-component>
+      <div class="content">
+         <div class="container padding0">
+            <div id="tt-content">
+               <div id="tt-carousel-slide-info" ng-controller="CarouselSlideController as slideController" ng-init="slideController.initWithCarouselSlideId()" class="ng-scope">
+                  <div class="header">
+                     <div class="row">
+                        <div class="col-xs-12 col-sm-7"> <span class="header-main ng-binding"> <a href="/admin/index">Admin</a> &gt; <a href="/admin/carouselSlides">Carousel Slide Administration</a> &gt; Add Slide </span> </div>
+                        <div class="col-xs-12 col-sm-5"> <a class="tt-btn tt-btn-primary edit-info-button pull-right ng-hide" ng-click="slideController.isEditing = true" ng-show="!slideController.isEditing"> <span class="edit-info-icon"></span> Edit </a> <a class="tt-btn tt-btn-primary save-info-button pull-right ng-hide" ng-click="slideController.saveCarouselSlide()" ng-show="slideController.isEditing &amp;&amp; slideController.isExistingSlide"> <span class="save-info-icon"></span> Save </a> <a class="tt-btn tt-btn-action pull-right ng-hide" ng-click="slideController.archiveCarouselSlide()" ng-show="slideController.isExistingSlide"> Archive This Slide </a> <a class="white-btn save-info-button pull-right" ng-click="slideController.saveCarouselSlide()" ng-show="slideController.isEditing &amp;&amp; !slideController.isExistingSlide"> <span class="save-info-icon"></span> Save </a> <a class="btn btn-primary pull-right" id="cancel-button" ng-show="!slideController.isExistingSlide" href="/admin/carouselSlides"> <span class="glyphicon glyphicon-remove"></span> Cancel </a> </div>
+                     </div>
+                  </div>
+                  <!-- ** Slide Text & Configurations panel ** --> 
+                  <carousel-slide-info-panel-header main-title="Slide Text &amp; Configurations" subtitle="Basic info for the carousel slide. Select all locations that apply." class="ng-isolate-scope">
+                     <div class="row header">
+                        <div class="col-xs-12 header-column"> <span class="header-main ng-binding">Slide Text &amp; Configurations</span> <span class="header-sub ng-binding">Basic info for the carousel slide. Select all locations that apply.</span> </div>
+                     </div>
+                  </carousel-slide-info-panel-header>
+                  <div class="panel panel-default" id="text-and-config-panel">
+                     <div class="row">
+                        <div class="col-sm-2">
+                           <tt-label class="ng-isolate-scope">
+                              <div class="tt-label-wrapper" ng-class="ngClass" style="height: 35px;">
+                                 <span class="required-dot hidden-xs ng-hide" ng-show="isRequired"></span> 
+                                 <div class="tt-label" ng-transclude=""> <span class="required-dot ng-scope"></span> Title: </div>
+                              </div>
+                           </tt-label>
+                        </div>
+                        <div class="col-sm-5"> <input class="tt-input-text ng-valid ng-valid-maxlength ng-not-empty ng-dirty ng-valid-parse ng-touched" maxlength="255" ng-model="slideController.slide.primaryText" ng-disabled="!slideController.isEditing" style=""> </div>
+                        <div class="col-sm-1">
+                           <tt-label class="ng-isolate-scope">
+                              <div class="tt-label-wrapper" ng-class="ngClass" style="height: 35px;">
+                                 <span class="required-dot hidden-xs ng-hide" ng-show="isRequired"></span> 
+                                 <div class="tt-label" ng-transclude="">Active:</div>
+                              </div>
+                           </tt-label>
+                        </div>
+                        <div class="col-sm-1">
+                           <tt-checkbox ng-model="slideController.slide.isActive" is-disabled="!slideController.isEditing" class="ng-pristine ng-untouched ng-valid ng-isolate-scope ng-not-empty">
+                              <div class="tt-checkbox-wrapper"> <input type="checkbox" class="tt-checkbox ng-pristine ng-untouched ng-valid ng-empty" ng-change="ngChange" ng-disabled="isDisabled" ng-model="isSelected"> <span>&nbsp;</span> </div>
+                           </tt-checkbox>
+                        </div>
+                        <div class="col-sm-1">
+                           <tt-label class="ng-isolate-scope">
+                              <div class="tt-label-wrapper" ng-class="ngClass" style="height: 35px;">
+                                 <span class="required-dot hidden-xs ng-hide" ng-show="isRequired"></span> 
+                                 <div class="tt-label" ng-transclude="">New Tab:</div>
+                              </div>
+                           </tt-label>
+                        </div>
+                        <div class="col-sm-1">
+                           <tt-checkbox ng-model="slideController.slide.openNewTab" is-disabled="!slideController.isEditing" class="ng-pristine ng-untouched ng-valid ng-isolate-scope ng-not-empty">
+                              <div class="tt-checkbox-wrapper"> <input type="checkbox" class="tt-checkbox ng-untouched ng-valid ng-not-empty ng-dirty ng-valid-parse" ng-change="ngChange" ng-disabled="isDisabled" ng-model="isSelected" style=""> <span>&nbsp;</span> </div>
+                           </tt-checkbox>
+                        </div>
+                     </div>
+                     <div class="row">
+                        <div class="col-sm-2">
+                           <tt-label class="ng-isolate-scope">
+                              <div class="tt-label-wrapper" ng-class="ngClass" style="height: 35px;">
+                                 <span class="required-dot hidden-xs ng-hide" ng-show="isRequired"></span> 
+                                 <div class="tt-label" ng-transclude=""> <span class="required-dot ng-scope"></span> Call to Action: </div>
+                              </div>
+                           </tt-label>
+                        </div>
+                        <div class="col-sm-5"> <input class="tt-input-text ng-valid ng-not-empty ng-dirty ng-valid-parse ng-touched" ng-model="slideController.slide.secondaryText" ng-disabled="!slideController.isEditing" style=""> </div>
+                        <div class="col-sm-2">
+                           <tt-label class="ng-isolate-scope">
+                              <div class="tt-label-wrapper" ng-class="ngClass" style="height: 35px;">
+                                 <span class="required-dot hidden-xs ng-hide" ng-show="isRequired"></span> 
+                                 <div class="tt-label" ng-transclude=""> <span class="required-dot ng-scope"></span> Appears on: </div>
+                              </div>
+                           </tt-label>
+                        </div>
+                        <div class="col-sm-2">
+                           <select class="tt-select ng-valid ng-not-empty ng-dirty ng-valid-parse ng-touched" ng-model="slideController.platform" ng-show="slideController.isEditing" style="">
+                              <option disabled="" value="Choose platform ..." selected="selected">Choose platform ...</option>
+                              <option value="All platforms">All platforms</option>
+                              <option value="Mobile only">Mobile only</option>
+                              <option value="Web only">Web only</option>
+                           </select>
+                        </div>
+                        <div class="col-sm-2"> <input class="tt-input-text ng-pristine ng-untouched ng-valid ng-hide ng-not-empty" ng-model="slideController.platform" ng-show="!slideController.isEditing" ng-disabled="true" disabled="disabled" style=""> </div>
+                     </div>
+                     <div class="row">
+                        <div class="col-xs-12 col-sm-2">
+                           <tt-label class="ng-isolate-scope">
+                              <div class="tt-label-wrapper" ng-class="ngClass" style="height: 35px;">
+                                 <span class="required-dot hidden-xs ng-hide" ng-show="isRequired"></span> 
+                                 <div class="tt-label" ng-transclude=""> <span class="required-dot ng-scope"></span> Locations: </div>
+                              </div>
+                           </tt-label>
+                        </div>
+                        <div class="col-sm-5">
+                           <select multiple="" class="col-xs-12 ng-valid ng-not-empty ng-dirty ng-valid-parse ng-touched" ng-model="slideController.locations" ng-options="location as location.name for location in slideController.allLocations" ng-disabled="!slideController.isEditing" size="8" style="">
+                              <option label="New York" value="object:57">New York</option>
+                              <option label="London" value="object:58">London</option>
+                              <option label="Chicago" value="object:59">Chicago</option>
+                              <option label="SF Bay Area" value="object:60">SF Bay Area</option>
+                              <option label="Los Angeles + OC" value="object:61">Los Angeles + OC</option>
+                              <option label="Washington DC" value="object:62">Washington DC</option>
+                              <option label="Boston" value="object:63">Boston</option>
+                              <option label="Connecticut" value="object:64">Connecticut</option>
+                              <option label="Philadelphia" value="object:65">Philadelphia</option>
+                              <option label="Seattle" value="object:66">Seattle</option>
+                              <option label="Toronto" value="object:67">Toronto</option>
+                              <option label="Dallas + Fort Worth" value="object:68">Dallas + Fort Worth</option>
+                              <option label="Houston" value="object:69">Houston</option>
+                              <option label="Sydney" value="object:70">Sydney</option>
+                              <option label="Melbourne" value="object:71">Melbourne</option>
+                           </select>
+                        </div>
+                        <div class="col-xs-6 col-xs-offset-3 col-sm-4 col-sm-offset-0"> <a class="tt-btn tt-btn-action" ng-show="slideController.isEditing &amp;&amp; slideController.locations.length != slideController.allLocations.length" ng-click="slideController.selectAllLocations()" style=""> Select All </a> <a class="tt-btn tt-btn-action ng-hide" ng-show="slideController.isEditing &amp;&amp; slideController.locations.length == slideController.allLocations.length" ng-click="slideController.clearAllLocations()" style=""> Clear All </a> </div>
+                     </div>
+                  </div>
+                  <!-- ** Action panel ** --> 
+                  <carousel-slide-info-panel-header main-title="Action" subtitle="Decide what happens when you click on the carousel slide" class="ng-isolate-scope">
+                     <div class="row header">
+                        <div class="col-xs-12 header-column"> <span class="header-main ng-binding">Action</span> <span class="header-sub ng-binding">Decide what happens when you click on the carousel slide</span> </div>
+                     </div>
+                  </carousel-slide-info-panel-header>
+                  <div class="panel panel-default">
+                     <div class="row">
+                        <div class="col-sm-2">
+                           <tt-label class="ng-isolate-scope">
+                              <div class="tt-label-wrapper" ng-class="ngClass" style="height: 35px;">
+                                 <span class="required-dot hidden-xs ng-hide" ng-show="isRequired"></span> 
+                                 <div class="tt-label" ng-transclude=""> <span class="required-dot ng-scope"></span> Destination: </div>
+                              </div>
+                           </tt-label>
+                        </div>
+                        <div class="col-sm-5">
+                           <select class="tt-select ng-valid ng-not-empty ng-dirty ng-valid-parse ng-touched" ng-model="slideController.carouselSlideType" ng-disabled="!slideController.isEditing" ng-change="slideController.setCarouselSlideType()" style="">
+                              <option disabled="" value="" selected="selected">Choose a destination for this slide ...</option>
+                              <option value="SHOW">Go to Show</option>
+                              <option value="SHOWGROUP">Go to Institution</option>
+                              <option value="DISCOVER">Go to Discover</option>
+                              <option value="DISCOVER_LIST">Go to Discover List</option>
+                              <option value="RUSH">Go to Rush Page/Screen</option>
+                              <option value="LOTTERY">Go to Lottery Page/Screen</option>
+                              <option value="DEEPLINK">Go to Page in app</option>
+                              <option value="PROMOTION">Go to Web page</option>
+                           </select>
+                        </div>
+                     </div>
+                     <div class="full-length-divider" ng-hide="slideController.carouselSlideType == ''" style="margin-top: 20px;"> </div>
+                     <!-- CASE: 'Go to Show' --> 
+                     <div class="row ng-hide" ng-show="slideController.carouselSlideType == 'SHOW'">
+                        <div class="col-sm-2">
+                           <tt-label class="ng-isolate-scope">
+                              <div class="tt-label-wrapper" ng-class="ngClass" style="height: 35px;">
+                                 <span class="required-dot hidden-xs ng-hide" ng-show="isRequired"></span> 
+                                 <div class="tt-label" ng-transclude=""> <span class="required-dot ng-scope"></span> Location: </div>
+                              </div>
+                           </tt-label>
+                        </div>
+                        <div class="col-sm-3">
+                           <select class="tt-select ng-pristine ng-untouched ng-valid ng-not-empty" ng-model="slideController.slideLocation" ng-show="slideController.isEditing" ng-options="location as location.name for location in slideController.allLocations" ng-change="slideController.getAllShowsForLocation(slideController.slideLocation.id)">
+                              <option label="New York" value="object:57" selected="selected">New York</option>
+                              <option label="London" value="object:58">London</option>
+                              <option label="Chicago" value="object:59">Chicago</option>
+                              <option label="SF Bay Area" value="object:60">SF Bay Area</option>
+                              <option label="Los Angeles + OC" value="object:61">Los Angeles + OC</option>
+                              <option label="Washington DC" value="object:62">Washington DC</option>
+                              <option label="Boston" value="object:63">Boston</option>
+                              <option label="Connecticut" value="object:64">Connecticut</option>
+                              <option label="Philadelphia" value="object:65">Philadelphia</option>
+                              <option label="Seattle" value="object:66">Seattle</option>
+                              <option label="Toronto" value="object:67">Toronto</option>
+                              <option label="Dallas + Fort Worth" value="object:68">Dallas + Fort Worth</option>
+                              <option label="Houston" value="object:69">Houston</option>
+                              <option label="Sydney" value="object:70">Sydney</option>
+                              <option label="Melbourne" value="object:71">Melbourne</option>
+                           </select>
+                           <input class="tt-input-text ng-pristine ng-untouched ng-valid ng-hide ng-not-empty" ng-model="slideController.slideLocation.name" ng-show="!slideController.isEditing" ng-disabled="true" disabled="disabled" style=""> 
+                        </div>
+                        <div class="col-sm-2">
+                           <tt-label class="ng-isolate-scope">
+                              <div class="tt-label-wrapper" ng-class="ngClass" style="height: 35px;">
+                                 <span class="required-dot hidden-xs ng-hide" ng-show="isRequired"></span> 
+                                 <div class="tt-label" ng-transclude=""> <span class="required-dot ng-scope"></span> Show: </div>
+                              </div>
+                           </tt-label>
+                        </div>
+                        <div class="col-sm-4">
+                           <select class="tt-select ng-pristine ng-untouched ng-valid ng-not-empty" ng-model="slideController.show" ng-show="slideController.isEditing" ng-options="show as show.name for show in slideController.shows">
+                              <option value="?" selected="selected"></option>
+                           </select>
+                           <input class="tt-input-text ng-pristine ng-untouched ng-valid ng-empty ng-hide" ng-model="slideController.show.name" ng-show="!slideController.isEditing" ng-disabled="true" disabled="disabled"> 
+                        </div>
+                     </div>
+                     <!-- CASE: 'Go to Rush Show' --> 
+                     <div class="row ng-hide" ng-show="slideController.carouselSlideType == 'RUSH'">
+                        <div class="col-sm-2">
+                           <tt-label class="ng-isolate-scope">
+                              <div class="tt-label-wrapper" ng-class="ngClass" style="height: 35px;">
+                                 <span class="required-dot hidden-xs ng-hide" ng-show="isRequired"></span> 
+                                 <div class="tt-label" ng-transclude=""> <span class="required-dot ng-scope"></span> Location: </div>
+                              </div>
+                           </tt-label>
+                        </div>
+                        <div class="col-sm-3">
+                           <select class="tt-select ng-pristine ng-untouched ng-valid ng-not-empty" ng-model="slideController.slideLocation" ng-show="slideController.isEditing" ng-options="location as location.name for location in slideController.allLocations" ng-change="slideController.getAllRushShowsForLocation(slideController.slideLocation.id)">
+                              <option label="New York" value="object:57" selected="selected">New York</option>
+                              <option label="London" value="object:58">London</option>
+                              <option label="Chicago" value="object:59">Chicago</option>
+                              <option label="SF Bay Area" value="object:60">SF Bay Area</option>
+                              <option label="Los Angeles + OC" value="object:61">Los Angeles + OC</option>
+                              <option label="Washington DC" value="object:62">Washington DC</option>
+                              <option label="Boston" value="object:63">Boston</option>
+                              <option label="Connecticut" value="object:64">Connecticut</option>
+                              <option label="Philadelphia" value="object:65">Philadelphia</option>
+                              <option label="Seattle" value="object:66">Seattle</option>
+                              <option label="Toronto" value="object:67">Toronto</option>
+                              <option label="Dallas + Fort Worth" value="object:68">Dallas + Fort Worth</option>
+                              <option label="Houston" value="object:69">Houston</option>
+                              <option label="Sydney" value="object:70">Sydney</option>
+                              <option label="Melbourne" value="object:71">Melbourne</option>
+                           </select>
+                           <input class="tt-input-text ng-pristine ng-untouched ng-valid ng-hide ng-not-empty" ng-model="slideController.slideLocation.name" ng-show="!slideController.isEditing" ng-disabled="true" disabled="disabled" style=""> 
+                        </div>
+                        <div class="col-sm-2">
+                           <tt-label class="ng-isolate-scope">
+                              <div class="tt-label-wrapper" ng-class="ngClass" style="height: 35px;">
+                                 <span class="required-dot hidden-xs ng-hide" ng-show="isRequired"></span> 
+                                 <div class="tt-label" ng-transclude=""> <span class="required-dot ng-scope"></span> Rush Show: </div>
+                              </div>
+                           </tt-label>
+                        </div>
+                        <div class="col-sm-4">
+                           <tt-label class="pull-left ng-isolate-scope ng-hide" id="not-available" ng-show="slideController.isEditing &amp;&amp; slideController.rushShows.length == 0">
+                              <div class="tt-label-wrapper" ng-class="ngClass" style="height: 35px;">
+                                 <span class="required-dot hidden-xs ng-hide" ng-show="isRequired"></span> 
+                                 <div class="tt-label" ng-transclude=""> No rush shows available </div>
+                              </div>
+                           </tt-label>
+                           <select class="tt-select ng-pristine ng-untouched ng-valid ng-not-empty" ng-model="slideController.show" ng-hide="!slideController.isEditing || (slideController.isEditing &amp;&amp; slideController.rushShows.length == 0)" ng-options="show as show.name for show in slideController.rushShows">
+                              <option value="?" selected="selected"></option>
+                           </select>
+                           <input class="tt-input-text ng-pristine ng-untouched ng-valid ng-empty ng-hide" ng-model="slideController.show.name" ng-show="!slideController.isEditing" ng-disabled="true" disabled="disabled"> 
+                        </div>
+                     </div>
+                     <!-- CASE: 'Go to Lottery Show' --> 
+                     <div class="row ng-hide" ng-show="slideController.carouselSlideType == 'LOTTERY'">
+                        <div class="col-sm-2">
+                           <tt-label class="ng-isolate-scope">
+                              <div class="tt-label-wrapper" ng-class="ngClass" style="height: 35px;">
+                                 <span class="required-dot hidden-xs ng-hide" ng-show="isRequired"></span> 
+                                 <div class="tt-label" ng-transclude=""> <span class="required-dot ng-scope"></span> Location: </div>
+                              </div>
+                           </tt-label>
+                        </div>
+                        <div class="col-sm-3">
+                           <select class="tt-select ng-pristine ng-untouched ng-valid ng-not-empty" ng-model="slideController.slideLocation" ng-show="slideController.isEditing" ng-options="location as location.name for location in slideController.allLocations" ng-change="slideController.getAllLotteryShowsForLocation(slideController.slideLocation.id)">
+                              <option label="New York" value="object:57" selected="selected">New York</option>
+                              <option label="London" value="object:58">London</option>
+                              <option label="Chicago" value="object:59">Chicago</option>
+                              <option label="SF Bay Area" value="object:60">SF Bay Area</option>
+                              <option label="Los Angeles + OC" value="object:61">Los Angeles + OC</option>
+                              <option label="Washington DC" value="object:62">Washington DC</option>
+                              <option label="Boston" value="object:63">Boston</option>
+                              <option label="Connecticut" value="object:64">Connecticut</option>
+                              <option label="Philadelphia" value="object:65">Philadelphia</option>
+                              <option label="Seattle" value="object:66">Seattle</option>
+                              <option label="Toronto" value="object:67">Toronto</option>
+                              <option label="Dallas + Fort Worth" value="object:68">Dallas + Fort Worth</option>
+                              <option label="Houston" value="object:69">Houston</option>
+                              <option label="Sydney" value="object:70">Sydney</option>
+                              <option label="Melbourne" value="object:71">Melbourne</option>
+                           </select>
+                           <input class="tt-input-text ng-pristine ng-untouched ng-valid ng-hide ng-not-empty" ng-model="slideController.slideLocation.name" ng-show="!slideController.isEditing" ng-disabled="true" disabled="disabled" style=""> 
+                        </div>
+                        <div class="col-sm-2">
+                           <tt-label class="ng-isolate-scope">
+                              <div class="tt-label-wrapper" ng-class="ngClass" style="height: 35px;">
+                                 <span class="required-dot hidden-xs ng-hide" ng-show="isRequired"></span> 
+                                 <div class="tt-label" ng-transclude=""> <span class="required-dot ng-scope"></span> Lottery Show: </div>
+                              </div>
+                           </tt-label>
+                        </div>
+                        <div class="col-sm-4">
+                           <tt-label class="pull-left ng-isolate-scope ng-hide" id="not-available" ng-show="slideController.isEditing &amp;&amp; slideController.lotteryShows.length == 0">
+                              <div class="tt-label-wrapper" ng-class="ngClass" style="height: 35px;">
+                                 <span class="required-dot hidden-xs ng-hide" ng-show="isRequired"></span> 
+                                 <div class="tt-label" ng-transclude=""> No lottery shows available </div>
+                              </div>
+                           </tt-label>
+                           <select class="tt-select ng-pristine ng-untouched ng-valid ng-not-empty" ng-model="slideController.show" ng-hide="!slideController.isEditing || (slideController.isEditing &amp;&amp; slideController.lotteryShows.length == 0)" ng-options="show as show.name for show in slideController.lotteryShows">
+                              <option value="?" selected="selected"></option>
+                           </select>
+                           <input class="tt-input-text ng-pristine ng-untouched ng-valid ng-empty ng-hide" ng-model="slideController.show.name" ng-show="!slideController.isEditing" ng-disabled="true" disabled="disabled"> 
+                        </div>
+                     </div>
+                     <!-- CASE: 'Go to Institution' --> 
+                     <div class="row ng-hide" ng-show="slideController.carouselSlideType == 'SHOWGROUP'">
+                        <div class="col-sm-2">
+                           <tt-label class="ng-isolate-scope">
+                              <div class="tt-label-wrapper" ng-class="ngClass" style="height: 35px;">
+                                 <span class="required-dot hidden-xs ng-hide" ng-show="isRequired"></span> 
+                                 <div class="tt-label" ng-transclude=""> <span class="required-dot ng-scope"></span> Location: </div>
+                              </div>
+                           </tt-label>
+                        </div>
+                        <div class="col-sm-3">
+                           <select class="tt-select ng-pristine ng-untouched ng-valid ng-not-empty" ng-model="slideController.slideLocation" ng-show="slideController.isEditing" ng-options="location as location.name for location in slideController.allLocations" ng-change="slideController.getAllShowGroupsForLocation(slideController.slideLocation.id)">
+                              <option label="New York" value="object:57" selected="selected">New York</option>
+                              <option label="London" value="object:58">London</option>
+                              <option label="Chicago" value="object:59">Chicago</option>
+                              <option label="SF Bay Area" value="object:60">SF Bay Area</option>
+                              <option label="Los Angeles + OC" value="object:61">Los Angeles + OC</option>
+                              <option label="Washington DC" value="object:62">Washington DC</option>
+                              <option label="Boston" value="object:63">Boston</option>
+                              <option label="Connecticut" value="object:64">Connecticut</option>
+                              <option label="Philadelphia" value="object:65">Philadelphia</option>
+                              <option label="Seattle" value="object:66">Seattle</option>
+                              <option label="Toronto" value="object:67">Toronto</option>
+                              <option label="Dallas + Fort Worth" value="object:68">Dallas + Fort Worth</option>
+                              <option label="Houston" value="object:69">Houston</option>
+                              <option label="Sydney" value="object:70">Sydney</option>
+                              <option label="Melbourne" value="object:71">Melbourne</option>
+                           </select>
+                           <input class="tt-input-text ng-pristine ng-untouched ng-valid ng-hide ng-not-empty" ng-model="slideController.slideLocation.name" ng-show="!slideController.isEditing" ng-disabled="true" disabled="disabled" style=""> 
+                        </div>
+                        <div class="col-sm-2">
+                           <tt-label class="ng-isolate-scope">
+                              <div class="tt-label-wrapper" ng-class="ngClass" style="height: 35px;">
+                                 <span class="required-dot hidden-xs ng-hide" ng-show="isRequired"></span> 
+                                 <div class="tt-label" ng-transclude=""> <span class="required-dot ng-scope"></span> Institution: </div>
+                              </div>
+                           </tt-label>
+                        </div>
+                        <div class="col-sm-4">
+                           <tt-label class="pull-left ng-isolate-scope ng-hide" id="not-available" ng-show="slideController.isEditing &amp;&amp; slideController.showGroups.length == 0">
+                              <div class="tt-label-wrapper" ng-class="ngClass" style="height: 35px;">
+                                 <span class="required-dot hidden-xs ng-hide" ng-show="isRequired"></span> 
+                                 <div class="tt-label" ng-transclude=""> No institutions available </div>
+                              </div>
+                           </tt-label>
+                           <select class="tt-select ng-pristine ng-untouched ng-valid ng-not-empty" ng-model="slideController.showGroup" ng-hide="!slideController.isEditing || (slideController.isEditing &amp;&amp; slideController.showGroups.length == 0)" ng-options="showGroup as showGroup.name for showGroup in slideController.showGroups">
+                              <option value="?" selected="selected"></option>
+                           </select>
+                           <input class="tt-input-text ng-pristine ng-untouched ng-valid ng-empty ng-hide" ng-model="slideController.showGroup.name" ng-show="!slideController.isEditing" ng-disabled="true" disabled="disabled"> 
+                        </div>
+                     </div>
+                     <!-- CASE: 'Go to Discover' --> 
+                     <div class="row ng-hide" ng-show="slideController.carouselSlideType == 'DISCOVER'">
+                        <div class="col-sm-2">
+                           <tt-label class="ng-isolate-scope">
+                              <div class="tt-label-wrapper" ng-class="ngClass" style="height: 35px;">
+                                 <span class="required-dot hidden-xs ng-hide" ng-show="isRequired"></span> 
+                                 <div class="tt-label" ng-transclude=""> <span class="required-dot ng-scope"></span> Location: </div>
+                              </div>
+                           </tt-label>
+                        </div>
+                        <div class="col-sm-3">
+                           <select class="tt-select ng-pristine ng-untouched ng-valid ng-not-empty" ng-model="slideController.slideLocation" ng-disabled="!slideController.isEditing" ng-options="location as location.name for location in slideController.allLocations">
+                              <option label="New York" value="object:57" selected="selected">New York</option>
+                              <option label="London" value="object:58">London</option>
+                              <option label="Chicago" value="object:59">Chicago</option>
+                              <option label="SF Bay Area" value="object:60">SF Bay Area</option>
+                              <option label="Los Angeles + OC" value="object:61">Los Angeles + OC</option>
+                              <option label="Washington DC" value="object:62">Washington DC</option>
+                              <option label="Boston" value="object:63">Boston</option>
+                              <option label="Connecticut" value="object:64">Connecticut</option>
+                              <option label="Philadelphia" value="object:65">Philadelphia</option>
+                              <option label="Seattle" value="object:66">Seattle</option>
+                              <option label="Toronto" value="object:67">Toronto</option>
+                              <option label="Dallas + Fort Worth" value="object:68">Dallas + Fort Worth</option>
+                              <option label="Houston" value="object:69">Houston</option>
+                              <option label="Sydney" value="object:70">Sydney</option>
+                              <option label="Melbourne" value="object:71">Melbourne</option>
+                           </select>
+                        </div>
+                     </div>
+                     <!-- CASE: 'Go to Discover List' --> 
+                     <div class="row" ng-show="slideController.carouselSlideType == 'DISCOVER_LIST'" style="">
+                        <div class="col-sm-2">
+                           <tt-label class="ng-isolate-scope">
+                              <div class="tt-label-wrapper" ng-class="ngClass" style="height: 35px;">
+                                 <span class="required-dot hidden-xs ng-hide" ng-show="isRequired"></span> 
+                                 <div class="tt-label" ng-transclude=""> <span class="required-dot ng-scope"></span> Location: </div>
+                              </div>
+                           </tt-label>
+                        </div>
+                        <div class="col-sm-3">
+                           <select class="tt-select ng-pristine ng-valid ng-not-empty ng-touched" ng-change="slideController.changeDiscoverListLocation()" ng-model="slideController.slideLocation" ng-disabled="!slideController.isEditing" ng-options="location as location.name for location in slideController.allLocations" style="">
+                              <option label="New York" value="object:57" selected="selected">New York</option>
+                              <option label="London" value="object:58">London</option>
+                              <option label="Chicago" value="object:59">Chicago</option>
+                              <option label="SF Bay Area" value="object:60">SF Bay Area</option>
+                              <option label="Los Angeles + OC" value="object:61">Los Angeles + OC</option>
+                              <option label="Washington DC" value="object:62">Washington DC</option>
+                              <option label="Boston" value="object:63">Boston</option>
+                              <option label="Connecticut" value="object:64">Connecticut</option>
+                              <option label="Philadelphia" value="object:65">Philadelphia</option>
+                              <option label="Seattle" value="object:66">Seattle</option>
+                              <option label="Toronto" value="object:67">Toronto</option>
+                              <option label="Dallas + Fort Worth" value="object:68">Dallas + Fort Worth</option>
+                              <option label="Houston" value="object:69">Houston</option>
+                              <option label="Sydney" value="object:70">Sydney</option>
+                              <option label="Melbourne" value="object:71">Melbourne</option>
+                           </select>
+                        </div>
+                        <div class="col-sm-3">
+                           <select class="tt-select ng-untouched ng-valid ng-not-empty ng-dirty ng-valid-parse" ng-disabled="!slideController.isEditing" ng-model="slideController.selectedDiscoverList" ng-options=" discoverList as discoverList.title for discoverList in slideController.discoverLists | orderBy:'title' " style="">
+                              <option value="" class="ng-binding"> Select Discover List: </option>
+                              <option label="2017 Tony Award Winners" value="object:72">2017 Tony Award Winners</option>
+                              <option label="A Feast for the Eyes" value="object:73">A Feast for the Eyes</option>
+                              <option label="A Musical For Every Taste" value="object:74">A Musical For Every Taste</option>
+                              <option label="aECXjnGmDX List" value="object:75">aECXjnGmDX List</option>
+                              <option label="Bang for Your Buck" value="object:76">Bang for Your Buck</option>
+                              <option label="Based on Books" value="object:77">Based on Books</option>
+                              <option label="Based On..." value="object:78">Based On...</option>
+                              <option label="Based On..." value="object:79">Based On...</option>
+                              <option label="bbbbbbbbbbbbb" value="object:80">bbbbbbbbbbbbb</option>
+                              <option label="beLkWowNkO List" value="object:81">beLkWowNkO List</option>
+                              <option label="BKBnXssAlf List" value="object:82">BKBnXssAlf List</option>
+                              <option label="Boundary Breakers" value="object:83">Boundary Breakers</option>
+                              <option label="Broadway Picks" value="object:84">Broadway Picks</option>
+                              <option label="btnqGIkhlH List" value="object:85">btnqGIkhlH List</option>
+                              <option label="CAiTdhyfty List" value="object:86">CAiTdhyfty List</option>
+                              <option label="cbWNBZnYCY List" value="object:87">cbWNBZnYCY List</option>
+                              <option label="cDjJtWTeub List" value="object:88">cDjJtWTeub List</option>
+                              <option label="Celebrating Pride" value="object:89">Celebrating Pride</option>
+                              <option label="Closing Soon" value="object:90">Closing Soon</option>
+                              <option label="Concierge Shows" value="object:91">Concierge Shows</option>
+                              <option label="Critics' Picks" value="object:92">Critics' Picks</option>
+                              <option label="CSjgfXqWwP List" value="object:93">CSjgfXqWwP List</option>
+                              <option label="CuqpxJdgFz List" value="object:94">CuqpxJdgFz List</option>
+                              <option label="CutnxwTluq List" value="object:95">CutnxwTluq List</option>
+                              <option label="Cyber Monday" value="object:96">Cyber Monday</option>
+                              <option label="Date Night" value="object:97">Date Night</option>
+                              <option label="dBCfsJFpdu List" value="object:98">dBCfsJFpdu List</option>
+                              <option label="Delectably Delicious" value="object:99">Delectably Delicious</option>
+                              <option label="Divas on Display" value="object:100">Divas on Display</option>
+                              <option label="DUQYvHdoGx List" value="object:101">DUQYvHdoGx List</option>
+                              <option label="Edgy" value="object:102">Edgy</option>
+                              <option label="EMhJzAlvax List" value="object:103">EMhJzAlvax List</option>
+                              <option label="ExLuxFOyJo List" value="object:104">ExLuxFOyJo List</option>
+                              <option label="Free from Fees" value="object:105">Free from Fees</option>
+                              <option label="Freedom from Fees" value="object:106">Freedom from Fees</option>
+                              <option label="Fresh Picks" value="object:107">Fresh Picks</option>
+                              <option label="Fun for the Whole Family" value="object:108">Fun for the Whole Family</option>
+                              <option label="FXkifEsPjA List" value="object:109">FXkifEsPjA List</option>
+                              <option label="GCMATDfquP List" value="object:110">GCMATDfquP List</option>
+                              <option label="GIGVuNkFeP List" value="object:111">GIGVuNkFeP List</option>
+                              <option label="gKHZbthwDR List" value="object:112">gKHZbthwDR List</option>
+                              <option label="Globetrotters" value="object:113">Globetrotters</option>
+                              <option label="gqJewxTWoA List" value="object:114">gqJewxTWoA List</option>
+                              <option label="gzcvIDLgVj List" value="object:115">gzcvIDLgVj List</option>
+                              <option label="Halloween Tix &amp; Treats" value="object:116">Halloween Tix &amp; Treats</option>
+                              <option label="Highest Rated" value="object:117">Highest Rated</option>
+                              <option label="HpVDaWKxzg List" value="object:118">HpVDaWKxzg List</option>
+                              <option label="hqIbLIKXWH List" value="object:119">hqIbLIKXWH List</option>
+                              <option label="HwehXoRDzs List" value="object:120">HwehXoRDzs List</option>
+                              <option label="It's Cyber Monday" value="object:121">It's Cyber Monday</option>
+                              <option label="itDwKkmnFV List" value="object:122">itDwKkmnFV List</option>
+                              <option label="jOmSPRKdKs List" value="object:123">jOmSPRKdKs List</option>
+                              <option label="Just Opened" value="object:124">Just Opened</option>
+                              <option label="jWnHbbPCrx List" value="object:125">jWnHbbPCrx List</option>
+                              <option label="KFYSBgLdUD List" value="object:126">KFYSBgLdUD List</option>
+                              <option label="kmEBOkaKNG List" value="object:127">kmEBOkaKNG List</option>
+                              <option label="Kristin Chenoweth's Broadway Favorites" value="object:128">Kristin Chenoweth's Broadway Favorites</option>
+                              <option label="Laugh Out Loud" value="object:129">Laugh Out Loud</option>
+                              <option label="Laugh Out Loud Comedy" value="object:130">Laugh Out Loud Comedy</option>
+                              <option label="LOL IRL for Comedy Month" value="object:131">LOL IRL for Comedy Month</option>
+                              <option label="McVbiGKjHB List" value="object:132">McVbiGKjHB List</option>
+                              <option label="MkfwfYlyHU List" value="object:133">MkfwfYlyHU List</option>
+                              <option label="mmLrYkpAAE List" value="object:134">mmLrYkpAAE List</option>
+                              <option label="mMNlrBeCgX List" value="object:135">mMNlrBeCgX List</option>
+                              <option label="msKwAsuOTH List" value="object:136">msKwAsuOTH List</option>
+                              <option label="mTRXMoJgUF List" value="object:137">mTRXMoJgUF List</option>
+                              <option label="New on TodayTix" value="object:138">New on TodayTix</option>
+                              <option label="New Year's Resoution: Get In Shape" value="object:139">New Year's Resoution: Get In Shape</option>
+                              <option label="NlkGNIjcYM List" value="object:140">NlkGNIjcYM List</option>
+                              <option label="NWMoAxbRJv List" value="object:141">NWMoAxbRJv List</option>
+                              <option label="Off-Broadway Favorites" value="object:142">Off-Broadway Favorites</option>
+                              <option label="OpTpcKQZtB List" value="object:143">OpTpcKQZtB List</option>
+                              <option label="OZGHMbTiGo List" value="object:144">OZGHMbTiGo List</option>
+                              <option label="pguicxnPyh List" value="object:145">pguicxnPyh List</option>
+                              <option label="Plan Ahead" value="object:146">Plan Ahead</option>
+                              <option label="Pragya Test" value="object:147">Pragya Test</option>
+                              <option label="PTVlZJEIxo List" value="object:148">PTVlZJEIxo List</option>
+                              <option label="qPQhuPXdni List" value="object:149">qPQhuPXdni List</option>
+                              <option label="QXomGWAGbS List" value="object:150">QXomGWAGbS List</option>
+                              <option label="QxyYHXmNNV List" value="object:151">QxyYHXmNNV List</option>
+                              <option label="RanIFOTClc List" value="object:152">RanIFOTClc List</option>
+                              <option label="Roundabout Theatre Company" value="object:153">Roundabout Theatre Company</option>
+                              <option label="RQVZxpumxi List" value="object:154">RQVZxpumxi List</option>
+                              <option label="RUnDRyUrbl List" value="object:155">RUnDRyUrbl List</option>
+                              <option label="Rush Roundup" value="object:156">Rush Roundup</option>
+                              <option label="Shows to See Memorial Day Weekend" value="object:157">Shows to See Memorial Day Weekend</option>
+                              <option label="Shows to see New Year's Day" value="object:158">Shows to see New Year's Day</option>
+                              <option label="Shows to See on New Year's Day" value="object:159">Shows to See on New Year's Day</option>
+                              <option label="Shows to see with Mom" value="object:160">Shows to see with Mom</option>
+                              <option label="Staff Picks" value="object:161">Staff Picks</option>
+                              <option label="Star-Studded" value="object:162">Star-Studded</option>
+                              <option label="tAtddEdznl List" value="object:163">tAtddEdznl List</option>
+                              <option label="Tearjerkers" value="object:164">Tearjerkers</option>
+                              <option label="TfZCpoBZpE List" value="object:165">TfZCpoBZpE List</option>
+                              <option label="The Best of Broadway" value="object:166">The Best of Broadway</option>
+                              <option label="The Classics" value="object:167">The Classics</option>
+                              <option label="Ticket Lotteries" value="object:168">Ticket Lotteries</option>
+                              <option label="Tony Award Nominees" value="object:169">Tony Award Nominees</option>
+                              <option label="Top Sellers" value="object:170">Top Sellers</option>
+                              <option label="ttCwdeIhWK List" value="object:171">ttCwdeIhWK List</option>
+                              <option label="Valentine's Day Shows" value="object:172">Valentine's Day Shows</option>
+                              <option label="Valentine's Day Theater Guide" value="object:173">Valentine's Day Theater Guide</option>
+                              <option label="VezZaxNPZv List" value="object:174">VezZaxNPZv List</option>
+                              <option label="Voted Most Dramatic" value="object:175">Voted Most Dramatic</option>
+                              <option label="What's Trending" value="object:176">What's Trending</option>
+                              <option label="What's Trending" value="object:177">What's Trending</option>
+                              <option label="What's Weird and Wonderful in NYC this Week" value="object:178">What's Weird and Wonderful in NYC this Week</option>
+                              <option label="Women's History Month" value="object:179">Women's History Month</option>
+                              <option label="XdjVWeSmPI List" value="object:180">XdjVWeSmPI List</option>
+                              <option label="xEhoPWiNUY List" value="object:181">xEhoPWiNUY List</option>
+                              <option label="XXFIGauqTL List" value="object:182">XXFIGauqTL List</option>
+                              <option label="YGoYhYzYqc List" value="object:183">YGoYhYzYqc List</option>
+                              <option label="YGYzlDiBBC List" value="object:184">YGYzlDiBBC List</option>
+                              <option label="ymqOpKFHOw List" value="object:185">ymqOpKFHOw List</option>
+                              <option label="YVrDVUaIFq List" value="object:186">YVrDVUaIFq List</option>
+                              <option label="YXphUBsIyf List" value="object:187">YXphUBsIyf List</option>
+                              <option label="ZdfPbhQcot List" value="object:188">ZdfPbhQcot List</option>
+                              <option label="zjqqkYHjYj List" value="object:189">zjqqkYHjYj List</option>
+                           </select>
+                        </div>
+                     </div>
+                     <!-- CASE: 'Go to Page in app' --> 
+                     <div class="row ng-hide" ng-show="slideController.carouselSlideType == 'DEEPLINK'">
+                        <div class="col-sm-2">
+                           <tt-label class="ng-isolate-scope">
+                              <div class="tt-label-wrapper" ng-class="ngClass" style="height: 35px;">
+                                 <span class="required-dot hidden-xs ng-hide" ng-show="isRequired"></span> 
+                                 <div class="tt-label" ng-transclude=""> <span class="required-dot ng-scope"></span> Page in app: </div>
+                              </div>
+                           </tt-label>
+                        </div>
+                        <div class="col-sm-5">
+                           <select class="tt-select ng-pristine ng-untouched ng-valid ng-not-empty" ng-model="slideController.pageInApp" ng-show="slideController.isEditing" style="">
+                              <option value="? string:Refer &amp; Save ?" selected="selected"></option>
+                              <option value="REFER">Refer &amp; Save</option>
+                              <option value="ORDERS">My Orders</option>
+                           </select>
+                           <input class="tt-input-text ng-pristine ng-untouched ng-valid ng-hide ng-not-empty" ng-model="slideController.pageInApp" ng-show="!slideController.isEditing" ng-disabled="true" disabled="disabled" style=""> 
+                        </div>
+                     </div>
+                     <!-- CASE: 'Go to Web page' --> 
+                     <div class="row ng-hide" ng-show="slideController.carouselSlideType == 'PROMOTION'">
+                        <div class="col-sm-2">
+                           <tt-label class="ng-isolate-scope">
+                              <div class="tt-label-wrapper" ng-class="ngClass" style="height: 35px;">
+                                 <span class="required-dot hidden-xs ng-hide" ng-show="isRequired"></span> 
+                                 <div class="tt-label" ng-transclude=""> <span class="required-dot ng-scope"></span> Web page URL: </div>
+                              </div>
+                           </tt-label>
+                        </div>
+                        <div class="col-sm-5"> <input class="tt-input-text ng-pristine ng-untouched ng-valid ng-empty" ng-model="slideController.webUrl" ng-disabled="!slideController.isEditing"> </div>
+                     </div>
+                  </div>
+                  <!-- ** Slide Images panel ** --> 
+                  <carousel-slide-info-panel-header main-title="Slide Images" subtitle="Upload an image for each platform on which this carousel slide appears" class="ng-isolate-scope">
+                     <div class="row header">
+                        <div class="col-xs-12 header-column"> <span class="header-main ng-binding">Slide Images</span> <span class="header-sub ng-binding">Upload an image for each platform on which this carousel slide appears</span> </div>
+                     </div>
+                  </carousel-slide-info-panel-header>
+                  <div class="panel panel-default" id="carousel-slide-images-panel">
+                     <div class="row">
+                        <!-- MOBILE IMAGE --> 
+                        <carousel-slide-image-selector ng-hide="slideController.platform == 'Web only'" image-label="Mobile Image" image-type="mobile" image-url="slideController.slide.mobileImage.url" required-width="756" required-height="567" on-upload="slideController.uploadImage" on-delete="slideController.deleteImage" allow-edit="slideController.isEditing" class="ng-isolate-scope">
+                           <div class="col-xs-12 col-sm-4">
+                              <div class="carousel-slide-image-label"> <span class="col-title ng-binding">Mobile Image</span> </div>
+                              <div class="carousel-slide-image-wrapper"> <img ng-src="//:0" id="carousel-slide-mobile-image" src="//:0"> </div>
+                              <div ng-show="allowEdit" class="carousel-slide-image-actions"> <a ngf-select="onUpload($file, imageType, requiredWidth, requiredHeight)" ngf-multiple="false" class="upload-icon-button"> </a> <a ng-click="onDelete(imageType)" class="delete-icon-button"></a> <a ng-href="//:0" class="download-image-icon-button" href="//:0"> </a> </div>
+                           </div>
+                        </carousel-slide-image-selector>
+                        <!-- WEB IMAGE --> 
+                        <carousel-slide-image-selector ng-hide="slideController.platform == 'Mobile only'" image-label="Web Image" image-type="web" image-url="slideController.slide.webImage.url" required-width="1600" required-height="500" on-upload="slideController.uploadImage" on-delete="slideController.deleteImage" allow-edit="slideController.isEditing" class="ng-isolate-scope ng-hide" style="">
+                           <div class="col-xs-12 col-sm-4">
+                              <div class="carousel-slide-image-label"> <span class="col-title ng-binding">Web Image</span> </div>
+                              <div class="carousel-slide-image-wrapper"> <img ng-src="//:0" id="carousel-slide-web-image" src="//:0"> </div>
+                              <div ng-show="allowEdit" class="carousel-slide-image-actions"> <a ngf-select="onUpload($file, imageType, requiredWidth, requiredHeight)" ngf-multiple="false" class="upload-icon-button"> </a> <a ng-click="onDelete(imageType)" class="delete-icon-button"></a> <a ng-href="//:0" class="download-image-icon-button" href="//:0"> </a> </div>
+                           </div>
+                        </carousel-slide-image-selector>
+                     </div>
+                     <div class="row">
+                        <div class="col-xs-5">
+                           <div class="images-explanation"> Mobile: 756px x 567px </div>
+                        </div>
+                        <div class="col-xs-5">
+                           <div class="images-explanation"> Web: 1600px x 500px </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-xs-8 col-xs-offset-2 col-sm-3 col-sm-offset-0"> <a class="tt-btn tt-btn-primary save-info-button" id="tt-save-button-bottom" ng-click="slideController.saveCarouselSlide()" ng-show="slideController.isEditing"> <span class="save-info-icon"></span> Save Carousel Slide </a> </div>
+                  <tt-yes-no-modal>
+                     <script type="text/ng-template" id="_yes-no-modal.html"> <div class="yes-no-modal"> <div class="modal-header"> <button type="button" class="close close-modal-button" ng-click="modalController.cancel()"> <span class="glyphicon glyphicon-remove"></span> </button> <h3 class="modal-title"> {{modalController.title}} </h3> </div> <div class="full-length-divider-0"></div> <div class="modal-body"> {{modalController.message}} </div> <div class="modal-footer"> <button class="btn confirm" ng-click="modalController.confirm()" ng-hide="modalController.yesButtonText == ''"> {{modalController.yesButtonText}} </button> <button class="btn btn-primary" ng-click="modalController.cancel()" ng-hide="modalController.noButtonText == ''"> {{modalController.noButtonText}} </button> </div> </div> </script>
+                  </tt-yes-no-modal>
+               </div>
+            </div>
+         </div>
+      </div>
+      <label tabindex="-1" style="visibility: hidden; position: absolute; overflow: hidden; width: 0px; height: 0px; border: none; margin: 0px; padding: 0px;">upload<input type="file" ngf-select="onUpload($file, imageType, requiredWidth, requiredHeight)" ngf-multiple="false"></label><label tabindex="-1" style="visibility: hidden; position: absolute; overflow: hidden; width: 0px; height: 0px; border: none; margin: 0px; padding: 0px;">upload<input type="file" ngf-select="onUpload($file, imageType, requiredWidth, requiredHeight)" ngf-multiple="false"></label>
+   </body>
+</html>
